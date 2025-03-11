@@ -1,0 +1,9 @@
+npm crete-next-app@14.2.5
+
+npm i @nextui-org/react@2.4.6 framer-motion@11.3.8
+
+npm i clsx@2.1.1 tailwind-merge@2.4.0
+
+npm i axios@1.7.2
+
+npm i next-auth@4.24.7
