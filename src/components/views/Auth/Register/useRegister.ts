@@ -3,11 +3,9 @@ import { useForm } from "react-hook-form"
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup"
 import { IRegister } from "@/types/Auth"
-import authServices from "@/services/auth"
+import authServices from "@/services/auth.service"
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
-import endpoint from "@/services/endpoint.constant"
-import environment from "@/config/environment"
 
 const registerSchema  = yup.object().shape({
     fullName: yup.string().required("Please input your fullName"),
@@ -47,7 +45,6 @@ const useRegister = () => {
 
     const registerService = async (payload: IRegister) => {
         const result = await authServices.register(payload)
-        console.log(environment.API_URL)
         return result
     }
 

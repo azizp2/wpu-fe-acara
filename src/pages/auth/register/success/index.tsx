@@ -1,6 +1,5 @@
 import AuthLayout from "@/components/layouts/AuthLayout";
-import Register from "@/components/views/Register";
-import RegisterSuccess from "@/components/views/RegisterSuccess/RegisterSuccess";
+import RegisterSuccess from "@/components/views/Auth/RegisterSuccess/RegisterSuccess";
 
 const RegisterSuccessPage = () =>{
     return (
