@@ -7,3 +7,9 @@ npm i clsx@2.1.1 tailwind-merge@2.4.0
 npm i axios@1.7.2
 
 npm i next-auth@4.24.7
+
+npm i prettier@3.3.3 prettier-plugin-tailwindcss@0.6.5
+
+npm i react-icons@5.2.1
+
+npm - i @tanstack/react-query@5.51.11 react-hook-form@7.52.1 yup@1.4.0 @hookform/resolver@3.9.0
