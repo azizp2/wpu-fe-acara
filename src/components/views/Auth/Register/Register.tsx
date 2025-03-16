@@ -14,7 +14,7 @@ const Register  = () => {
         control, 
         handleSubmit, 
         handleRegister, 
-        isPendingRegsiter, 
+        isPendingRegister, 
         errors} = useRegister();
 
         console.log(errors)
@@ -38,12 +38,12 @@ const Register  = () => {
             </div>
             <Card>
                 <CardBody className="p-8">
-                    <h2 className="text-xl font-bold text-danger-500">Create Account</h2>
-                    <p className="text-small mb-4">Have an account?
+                    <h2 className="text-2xl font-bold text-danger-500">Create Account</h2>
+                    <p className="text-small mb-4 mt-2">Have an account?
 
                         <Link href="/auth/login" className="font-semibold text-danger-400">Login here</Link>
                     </p>
-                    <p className="mb-2 font-medium text-danger">Tests{errors?.root?.message}</p>
+                    <p className="mb-2 font-medium text-danger">{errors?.root?.message}</p>
                     <form className={cn("flex w-80 flex-col", Object.keys(errors).length > 0 ? "gap-2" : "gap-4")} onSubmit={handleSubmit(handleRegister)}>
                         <Controller name="fullName" control={control} render={({field}) => (
                             <Input 
@@ -118,7 +118,7 @@ const Register  = () => {
                         )} />
                         
                         
-                        <Button color="danger" size="lg" type="submit">{isPendingRegsiter ? (
+                        <Button color="danger" size="lg" type="submit">{isPendingRegister ? (
                             <Spinner color="white" size="sm"/>) : "Register"}</Button>
                     </form>
                 </CardBody>

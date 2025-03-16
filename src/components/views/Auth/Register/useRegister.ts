@@ -48,7 +48,7 @@ const useRegister = () => {
         return result
     }
 
-    const {mutate: mutateRegister, isPending: isPendingRegsiter} = useMutation({
+    const {mutate: mutateRegister, isPending: isPendingRegister} = useMutation({
         mutationFn: registerService,
         onError(error) {
             setError("root",{
@@ -71,7 +71,7 @@ const useRegister = () => {
         control,
         handleSubmit, 
         handleRegister,
-        isPendingRegsiter,
+        isPendingRegister,
         errors
     }
 
