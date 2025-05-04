@@ -31,7 +31,7 @@ const DashboardLayoutSidebar = (props: PropTypes) => {
                     width={180}
                     height={60}
                     className="mb-6 w-32"
-                    onClick={ () => router.push('/')} />
+                    onPress={ () => router.push('/')} />
                 </div>
                 <Listbox items={sidebarItems} variant="solid" aria-label="Dashboard Menu">
                 {(item) => (
@@ -53,7 +53,7 @@ const DashboardLayoutSidebar = (props: PropTypes) => {
 
             
             <div className="flex items-center p-1">
-                <Button color="danger" fullWidth variant="light" className="flex justify-start rounder-lg px-2 py-1" size="lg" onClick={ () => signOut()}>
+                <Button color="danger" fullWidth variant="light" className="flex justify-start rounder-lg px-2 py-1" size="lg" onPress={ () => signOut()}>
                     <CiLogout />
                     Logout
                 </Button>

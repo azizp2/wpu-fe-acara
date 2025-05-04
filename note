@@ -13,3 +13,13 @@ npm i prettier@3.3.3 prettier-plugin-tailwindcss@0.6.5
 npm i react-icons@5.2.1
 
 npm - i @tanstack/react-query@5.51.11 react-hook-form@7.52.1 yup@1.4.0 @hookform/resolver@3.9.0
+
+Update Ke Next 15
+
+npm i next@15.1.1 react@19.0.0 react-dom@19.0.0
+
+npm i @nextui-org/react@2.6.8 @tanstack/react-query@5.62.8 next-auth@4.24.11 --force
+
+-- Untuk Depedencies
+
+npm i -D @types/react@19.0.0 @types/react-dom@19.0.0 eslint@9.16.0 eslint-config-next@15.1.1
