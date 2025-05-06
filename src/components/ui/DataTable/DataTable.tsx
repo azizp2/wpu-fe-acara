@@ -3,7 +3,6 @@ import { cn } from "@/utils/cn";
 import { Button, Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react"
 import { ChangeEvent, Key, ReactNode, useMemo } from "react"
 import { CiSearch } from "react-icons/ci";
-import { FcEmptyBattery } from "react-icons/fc";
 
 interface PropsTypes{
     buttonTopContentLabel?: string;
@@ -69,12 +68,13 @@ const DataTable = (props: PropsTypes) => {
 
     const BottomContent = useMemo(() => {
         return (
-            <div className="flex items-center justify-center px-2 py-2 lg:justify-between">
+            <div className="flex items-center justify-center lg:justify-between">
                 <Select 
                     className="hidden max-w-36 lg:block" 
                     size="md"
                     selectedKeys={[limit]}
                     selectionMode="single"
+                    disallowEmptySelection
                     onChange={onChangeLimit}
                     startContent={<p className="text-small">Show: </p>}
                 >
@@ -85,14 +85,17 @@ const DataTable = (props: PropsTypes) => {
                     ))}
                 </Select>
 
-                <Pagination 
+                {totalPages > 0 && (
+                    <Pagination 
                     isCompact 
                     showControls 
                     color="danger" 
                     page={currentPage} 
                     total={totalPages}
                     onChange={onChangePage}
+                    loop
                 />
+                )}
 
             </div>
         )
