@@ -1,4 +1,4 @@
-import { DELAY, LIMIT_DEFAULT, PAGE_DEFAULT } from "@/components/constants/list.constants";
+import { DELAY, LIMIT_DEFAULT, PAGE_DEFAULT } from "@/constants/list.constants";
 import useDebounce from "@/components/hooks/useDebounce";
 import categoryServices from "@/services/category.service";
 import { useQuery } from "@tanstack/react-query";

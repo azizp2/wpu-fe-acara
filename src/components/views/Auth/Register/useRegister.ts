@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -6,6 +6,7 @@ import { IRegister } from "@/types/Auth"
 import authServices from "@/services/auth.service"
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
+import { ToasterContext } from "@/contexts/ToasterContext"
 
 const registerSchema  = yup.object().shape({
     fullName: yup.string().required("Please input your fullName"),
@@ -20,6 +21,8 @@ const registerSchema  = yup.object().shape({
 
 const useRegister = () => {
     const router = useRouter();
+    const { setToaster } = useContext(ToasterContext);
+
     const [visiblePassword, setVisiblePassword] = useState({
         password: false,
         passwordConfirmation: false,       
@@ -50,14 +53,18 @@ const useRegister = () => {
 
     const {mutate: mutateRegister, isPending: isPendingRegister} = useMutation({
         mutationFn: registerService,
-        onError(error) {
-            setError("root",{
-                message: error.message
-            });
-            console.log(error);
+        onError: (error) => {
+            setToaster({
+                type: "error",
+                message: error.message,
+              });
         },
 
         onSuccess: () => {
+            setToaster({
+                type: "success",
+                message: "Register success",
+              });
             router.push("/auth/register/success");
             reset();
         }

@@ -1,4 +1,4 @@
-import { LIMIT_LISTS } from "@/components/constants/list.constants";
+import { LIMIT_LISTS } from "@/constants/list.constants";
 import { cn } from "@/utils/cn";
 import { Button, Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react"
 import { ChangeEvent, Key, ReactNode, useMemo } from "react"
