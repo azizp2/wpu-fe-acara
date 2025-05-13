@@ -1,5 +1,5 @@
 import DataTable from "@/components/ui/DataTable";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { Key, ReactNode, useCallback, useEffect } from "react";
@@ -7,16 +7,18 @@ import { CiMenuKebab } from "react-icons/ci";
 import { COLUMN_LISTS_CATEGORY } from "./Category.constant";
 import useCategory from "./useCategory";
 import InputFile from "@/components/ui/InputFile";
+import AddCategoryModal from "./AddCategoryModal";
 
 const Category = () => {
-    const {push, isReady, query} = useRouter();
-    const { 
-        currentPage, 
-        currentLimit, 
-        currentSearch, 
-        dataCategory, 
-        isLoadingCategory, 
-        isRefetchingCategory, 
+    const { push, isReady, query } = useRouter();
+    const {
+        currentPage,
+        refetchCategory,
+        currentLimit,
+        currentSearch,
+        dataCategory,
+        isLoadingCategory,
+        isRefetchingCategory,
         setURL,
         handleChangePage,
         handleChangeLimit,
@@ -24,41 +26,43 @@ const Category = () => {
         handleClearSearch
     } = useCategory();
 
+    const addCategoryModal = useDisclosure()
+
 
     useEffect(() => {
-        if(isReady){
+        if (isReady) {
             setURL();
         }
     }, [isReady])
 
-    const renderCell  = useCallback(
+    const renderCell = useCallback(
         (category: Record<string, unknown>, columnKey: Key) => {
             const cellValue = category[columnKey as keyof typeof category];
 
-            switch(columnKey){
+            switch (columnKey) {
                 // case "icon":
                 //     return (
                 //         <Image src={`${cellValue}`} alt="Icon" width={100} height={200}/>
                 //     );
-                    case "actions":
-                        return (
-                            <Dropdown>
-                                <DropdownTrigger>
-                                    <Button isIconOnly size="sm" variant="light">
-                                        <CiMenuKebab className="text-default-700"/>
-                                    </Button>
-                                </DropdownTrigger>
-                                <DropdownMenu>
-                                    <DropdownItem key="detail-category-button"
+                case "actions":
+                    return (
+                        <Dropdown>
+                            <DropdownTrigger>
+                                <Button isIconOnly size="sm" variant="light">
+                                    <CiMenuKebab className="text-default-700" />
+                                </Button>
+                            </DropdownTrigger>
+                            <DropdownMenu>
+                                <DropdownItem key="detail-category-button"
                                     onPress={() => push(`/admin/category/${category._id}`)}>Detail Category</DropdownItem>
-                                    <DropdownItem key="delete-category" className="text-danger-500"
-                                    >Delete Category</DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
+                                <DropdownItem key="delete-category" className="text-danger-500"
+                                >Delete Category</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
 
-                        )
-                    default : 
-                        return  cellValue as ReactNode 
+                    )
+                default:
+                    return cellValue as ReactNode
             }
 
         }, [push]
@@ -67,25 +71,27 @@ const Category = () => {
     return (
         <section>
             {Object.keys(query).length > 0 && (
-                <DataTable 
-                buttonTopContentLabel="Create Category" 
-                columns={COLUMN_LISTS_CATEGORY} 
-                currentPage={Number(currentPage)}
-                data={dataCategory?.data || []}
-                emptyContent="Category is empty"
-                isLoading= {isLoadingCategory || isRefetchingCategory}
-                limit={String(currentLimit)}
-                onChangeLimit={handleChangeLimit}
-                onChangeSearch={handleSearch}
-                onChangePage={handleChangePage}
-                onClearSearch={handleClearSearch}
-                onClickButtonTopContent={() => {}}
-                renderCell={renderCell}
-                totalPages={dataCategory?.pagination.totalPages}
+                <DataTable
+                    buttonTopContentLabel="Create Category"
+                    columns={COLUMN_LISTS_CATEGORY}
+                    currentPage={Number(currentPage)}
+                    data={dataCategory?.data || []}
+                    emptyContent="Category is empty"
+                    isLoading={isLoadingCategory || isRefetchingCategory}
+                    limit={String(currentLimit)}
+                    onChangeLimit={handleChangeLimit}
+                    onChangeSearch={handleSearch}
+                    onChangePage={handleChangePage}
+                    onClearSearch={handleClearSearch}
+                    onClickButtonTopContent={addCategoryModal.onOpen}
+                    renderCell={renderCell}
+                    totalPages={dataCategory?.pagination.totalPages}
                 // isLoading
-            />
+                />
             )}
-        <InputFile name="upload" isDropable></InputFile>
+
+            <AddCategoryModal refetchCategory={refetchCategory} {...addCategoryModal} />
+            {/* <InputFile name="upload" isDropable></InputFile> */}
         </section>
 
     )
