@@ -17,12 +17,17 @@ const AddCategoryModal = (props: PropTypes) => {
     const {
         control,
         errors,
-        reset,
         handleSubmitForm,
         handleAddCategory,
         isPendingMutateAddCategory,
         isSuccessMutateAddCategory,
-        isPendingMutateAddFile
+
+        preview,
+        handleUploadIcon,
+        isPendingMutateUploadFile,
+        handleDeleteIcon,
+        isPendingMutateDeletedFile,
+        handleOnClose
     } = useAddCategoryModal();
 
 
@@ -33,8 +38,10 @@ const AddCategoryModal = (props: PropTypes) => {
         }
     }, [isSuccessMutateAddCategory])
 
+    const disabledSubmit = isPendingMutateAddCategory || isPendingMutateUploadFile || isPendingMutateDeletedFile
+
     return (
-        <Modal onOpenChange={onOpenChange} isOpen={isOpen} placement="center" scrollBehavior="inside">
+        <Modal onOpenChange={onOpenChange} isOpen={isOpen} onClose={() => handleOnClose(onClose)} placement="center" scrollBehavior="inside">
             <form onSubmit={handleSubmitForm(handleAddCategory)}>
                 <ModalContent className="m-4">
                     <ModalHeader>Add Category</ModalHeader>
@@ -78,11 +85,14 @@ const AddCategoryModal = (props: PropTypes) => {
                                 render={({ field: { onChange, value, ...field } }) => (
                                     <InputFile
                                         {...field}
-                                        onChange={(e) => {
-                                            onChange(e.currentTarget.files)
-                                        }}
+                                        onDelete={() => handleDeleteIcon(onChange)}
+                                        onUpload={(files) => handleUploadIcon(files, onChange)}
+                                        isUploading={isPendingMutateUploadFile}
                                         isInvalid={errors.icon !== undefined}
                                         errorMessage={errors.icon?.message}
+                                        isDeleting={isPendingMutateDeletedFile}
+                                        isDropable
+                                        preview={typeof preview == 'string' ? preview : ""}
                                     />
 
                                 )} />
@@ -90,11 +100,11 @@ const AddCategoryModal = (props: PropTypes) => {
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="danger" variant="flat" onPress={onClose} disabled={isPendingMutateAddCategory || isPendingMutateAddFile}>
+                        <Button color="danger" variant="flat" onPress={() => handleOnClose(onClose)} disabled={disabledSubmit}>
                             Cancel
                         </Button>
-                        <Button color="danger" type="submit" disabled={isPendingMutateAddCategory || isPendingMutateAddFile}>
-                            {isPendingMutateAddCategory || isPendingMutateAddFile ? (
+                        <Button color="danger" type="submit" disabled={disabledSubmit}>
+                            {isPendingMutateAddCategory ? (
                                 <Spinner size="sm" color="white" />
                             ) : (
                                 "Create Add Category"
