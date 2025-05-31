@@ -8,6 +8,7 @@ import { COLUMN_LISTS_CATEGORY } from "./Category.constant";
 import useCategory from "./useCategory";
 import InputFile from "@/components/ui/InputFile";
 import AddCategoryModal from "./AddCategoryModal";
+import DeleteCategoryModal from "./DeleteCategoryModal";
 
 const Category = () => {
     const { push, isReady, query } = useRouter();
@@ -23,10 +24,14 @@ const Category = () => {
         handleChangePage,
         handleChangeLimit,
         handleSearch,
-        handleClearSearch
+        handleClearSearch,
+        selectedId,
+        setSelectedId
+
     } = useCategory();
 
     const addCategoryModal = useDisclosure()
+    const deleteCategoryMdoal = useDisclosure();
 
 
     useEffect(() => {
@@ -40,10 +45,10 @@ const Category = () => {
             const cellValue = category[columnKey as keyof typeof category];
 
             switch (columnKey) {
-                // case "icon":
-                //     return (
-                //         <Image src={`${cellValue}`} alt="Icon" width={100} height={200}/>
-                //     );
+                case "icon":
+                    return (
+                        <Image src={`${cellValue}`} alt="Icon" width={100} height={200} />
+                    );
                 case "actions":
                     return (
                         <Dropdown>
@@ -55,7 +60,13 @@ const Category = () => {
                             <DropdownMenu>
                                 <DropdownItem key="detail-category-button"
                                     onPress={() => push(`/admin/category/${category._id}`)}>Detail Category</DropdownItem>
-                                <DropdownItem key="delete-category" className="text-danger-500"
+                                <DropdownItem
+                                    key="delete-category"
+                                    className="text-danger-500"
+                                    onPress={() => {
+                                        setSelectedId(`${category._id}`)
+                                        deleteCategoryMdoal.onOpen();
+                                    }}
                                 >Delete Category</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
@@ -91,6 +102,7 @@ const Category = () => {
             )}
 
             <AddCategoryModal refetchCategory={refetchCategory} {...addCategoryModal} />
+            <DeleteCategoryModal refetchCategory={refetchCategory} {...deleteCategoryMdoal} selectedId={selectedId} setSelectedId={setSelectedId} />
             {/* <InputFile name="upload" isDropable></InputFile> */}
         </section>
 
