@@ -7,6 +7,7 @@ const categoryServices = {
     getCategoryById: (id:string) => instance.get(`${endpoint.CATEGORY}/${id}`),
     addCategory : (payload: ICategory) => instance.post(endpoint.CATEGORY, payload),
     deleteCategory: (id:string) => instance.delete(`${endpoint.CATEGORY}/${id}`),
+    updateCategory: (id:string, payload: ICategory) => instance.put(`${endpoint.CATEGORY}/${id}`, payload),
 };
 
 export default categoryServices;

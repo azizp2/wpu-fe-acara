@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/views/Admin/DetailCategory/InfoTab"  ],
   "exclude": [
     "node_modules"
   ]
